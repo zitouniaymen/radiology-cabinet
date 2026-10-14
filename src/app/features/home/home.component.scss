@@ -1,0 +1,64 @@
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.hero h1 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  margin: 0 0 0.75rem;
+}
+
+.hero p {
+  max-width: 52ch;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.stat-label {
+  margin: 0 0 1rem;
+  opacity: 0.7;
+}
+
+.stat-breakdown {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.stat-breakdown li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.service-card mat-card-content {
+  line-height: 1.5;
+}
+
+@media (max-width: 899px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}

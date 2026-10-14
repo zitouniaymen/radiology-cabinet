@@ -1,0 +1,59 @@
+<section class="hero">
+  <div class="hero-text">
+    <h1>Cabinet de radiologie</h1>
+    <p>
+      Planification des examens d'imagerie, suivi des salles et des créneaux, sans aucune donnée
+      médicale stockée.
+    </p>
+    <div class="hero-actions">
+      <a mat-flat-button color="primary" routerLink="/exams">
+        <mat-icon>event_available</mat-icon>
+        Gérer les examens
+      </a>
+      <a mat-stroked-button href="tel:+33100000000">
+        <mat-icon>call</mat-icon>
+        Nous appeler
+      </a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" aria-label="Chargement des statistiques" />
+    } @else if (statistics(); as stats) {
+      <mat-card appearance="outlined">
+        <mat-card-content>
+          <p class="stat-value">{{ stats.total }}</p>
+          <p class="stat-label">examens enregistrés</p>
+          <ul class="stat-breakdown">
+            <li><span>Planifiés</span><strong>{{ stats.countByStatus.SCHEDULED }}</strong></li>
+            <li><span>En cours</span><strong>{{ stats.countByStatus.IN_PROGRESS }}</strong></li>
+            <li><span>Terminés</span><strong>{{ stats.countByStatus.COMPLETED }}</strong></li>
+            <li><span>Annulés</span><strong>{{ stats.countByStatus.CANCELLED }}</strong></li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
+    } @else {
+      <mat-card appearance="outlined" routerLink="/statistic">
+        <mat-card-content>Statistiques disponibles pour le moment.</mat-card-content>
+      </mat-card>
+    }
+  </div>
+</section>
+
+<section class="services" aria-labelledby="services-title">
+  <h2 id="services-title">Nos plateaux techniques</h2>
+  <div class="service-grid">
+    @for (service of services; track service.title) {
+      <mat-card appearance="outlined" class="service-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar aria-hidden="true">{{ service.icon }}</mat-icon>
+          <mat-card-title>{{ service.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>{{ service.description }}</mat-card-content>
+      </mat-card>
+    }
+  </div>
+</section>
+
+
+

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/exam-statistics-component/exam-statistics-component.scss"],
+  "sourcesContent": ["/* Structure */\r\ntable {\r\n  width: 100%;\r\n}\r\n\r\n.mat-mdc-form-field {\r\n  font-size: 14px;\r\n  width: 100%;\r\n}\r\n"],
+  "mappings": ";AACA;AACE,SAAA;;AAGF,CAAA;AACE,aAAA;AACA,SAAA;;",
+  "names": []
+}

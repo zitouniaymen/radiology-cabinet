@@ -1,0 +1,243 @@
+<header class="page-header">
+  <div>
+    <h1>Statistiques du cabinet</h1>
+    <p>Examens (tous types et par type) et patients pris en charge, par jour, mois ou année.</p>
+  </div>
+
+  <div class="header-actions">
+    <button mat-stroked-button type="button" (click)="exportCsv()" [disabled]="periodCount() === 0">
+      <mat-icon>download</mat-icon>
+      Exporter CSV
+    </button>
+    <button mat-flat-button color="primary" type="button" (click)="refresh()" [disabled]="loading()">
+      <mat-icon>refresh</mat-icon>
+      Actualiser
+    </button>
+  </div>
+</header>
+
+<section class="filters" aria-label="Filtres statistiques">
+  <mat-button-toggle-group
+    class="period-toggle"
+    aria-label="Granularité temporelle"
+    [value]="period()"
+    (change)="onPeriodChange($event.value)"
+  >
+    @for (type of periodTypes; track type) {
+      <mat-button-toggle [value]="type">{{ periodLabels[type] }}</mat-button-toggle>
+    }
+  </mat-button-toggle-group>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Du</mat-label>
+    <input matInput [matDatepicker]="fromPicker" [value]="from()" (dateChange)="from.set($event.value); onDateChange()" />
+    <mat-datepicker-toggle matIconSuffix [for]="fromPicker"></mat-datepicker-toggle>
+    <mat-datepicker #fromPicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Au</mat-label>
+    <input matInput [matDatepicker]="toPicker" [value]="to()" (dateChange)="to.set($event.value); onDateChange()" />
+    <mat-datepicker-toggle matIconSuffix [for]="toPicker"></mat-datepicker-toggle>
+    <mat-datepicker #toPicker></mat-datepicker>
+  </mat-form-field>
+
+  <button mat-button type="button" (click)="resetFilters()">
+    <mat-icon>filter_alt_off</mat-icon>
+    Réinitialiser
+  </button>
+</section>
+
+@if (loading()) {
+  <mat-progress-bar mode="indeterminate" aria-label="Chargement des statistiques" />
+}
+
+@if (loadError()) {
+  <div class="error-banner" role="alert">
+    <mat-icon aria-hidden="true">cloud_off</mat-icon>
+    <span>Impossible de charger les statistiques. Vérifiez que l'API est démarrée, puis actualisez.</span>
+  </div>
+}
+
+<section class="kpi-grid" aria-label="Indicateurs clés">
+  <mat-card class="kpi-card" appearance="outlined">
+    <mat-card-content>
+      <div class="kpi-icon kpi-icon--exams"><mat-icon aria-hidden="true">science</mat-icon></div>
+      <p class="kpi-value">{{ report()?.totalExams ?? 0 }}</p>
+      <p class="kpi-label">Examens · {{ currentPeriodLabel() }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="kpi-card" appearance="outlined">
+    <mat-card-content>
+      <div class="kpi-icon kpi-icon--patients"><mat-icon aria-hidden="true">groups</mat-icon></div>
+      <p class="kpi-value">{{ report()?.totalPatients ?? 0 }}</p>
+      <p class="kpi-label">Patients distincts · {{ currentPeriodLabel() }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="kpi-card" appearance="outlined">
+    <mat-card-content>
+      <div class="kpi-icon kpi-icon--periods"><mat-icon aria-hidden="true">timeline</mat-icon></div>
+      <p class="kpi-value">{{ periodCount() }}</p>
+      <p class="kpi-label">Périodes analysées</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="kpi-card" appearance="outlined">
+    <mat-card-content>
+      <div class="kpi-icon kpi-icon--done"><mat-icon aria-hidden="true">check_circle</mat-icon></div>
+      <p class="kpi-value">{{ overview()?.countByStatus?.['COMPLETED'] ?? 0 }}</p>
+      <p class="kpi-label">Examens terminés · global</p>
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<mat-card class="chart-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Évolution des examens et patients</mat-card-title>
+    <mat-card-subtitle>Par {{ currentPeriodLabelLower() }} — {{ periodCount() }} période(s)</mat-card-subtitle>
+    <span class="chart-legend">
+      <span class="legend-item"><i class="dot dot--exams"></i>Examens</span>
+      <span class="legend-item"><i class="dot dot--patients"></i>Patients</span>
+    </span>
+  </mat-card-header>
+  <mat-card-content>
+    @if (series().length === 0) {
+      <p class="empty-state">Aucune donnée sur la période sélectionnée.</p>
+    } @else {
+      <div class="chart" role="img" aria-label="Histogramme examens et patients par période">
+        @for (row of series(); track row.period) {
+          <div class="chart-column" [matTooltip]="row.period + ' · ' + row.totalExams + ' examens / ' + row.totalPatients + ' patients'">
+            <div class="bars">
+              <span class="bar bar--exams" [style.height.%]="row.examsHeight"></span>
+              <span class="bar bar--patients" [style.height.%]="row.patientsHeight"></span>
+            </div>
+            <span class="chart-label">{{ row.period }}</span>
+          </div>
+        }
+      </div>
+    }
+  </mat-card-content>
+</mat-card>
+
+<div class="grid-2">
+  <mat-card class="statistics-card" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Répartition par type d'examen</mat-card-title>
+      <mat-card-subtitle>Modalités sur la période sélectionnée</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      @if (modalityRows().length === 0) {
+        <p class="empty-state">Aucune donnée disponible.</p>
+      } @else {
+        <table mat-table [dataSource]="modalityRows()" class="statistics-table">
+          <ng-container matColumnDef="modality">
+            <th mat-header-cell *matHeaderCellDef>Type</th>
+            <td mat-cell *matCellDef="let row">
+              <span class="row-tag" [style.background]="modalityColor(row.modality)"></span>
+              {{ row.label }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef>Examens</th>
+            <td mat-cell *matCellDef="let row">{{ row.total }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="share">
+            <th mat-header-cell *matHeaderCellDef>Part</th>
+            <td mat-cell *matCellDef="let row"><span class="share">{{ row.share }}%</span></td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="modalityColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: modalityColumns"></tr>
+        </table>
+      }
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="statistics-card" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Répartition par statut</mat-card-title>
+      <mat-card-subtitle>Vue globale toutes périodes</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      @if (donut().length === 0) {
+        <p class="empty-state">Aucune donnée disponible.</p>
+      } @else {
+        <div class="donut-wrapper">
+          <div class="donut" [style.background]="donutGradient()" role="img" aria-label="Répartition des examens par statut">
+            <div class="donut-hole">
+              <span class="donut-total">{{ overview()?.totalExams ?? 0 }}</span>
+              <span class="donut-total-label">examens</span>
+            </div>
+          </div>
+
+          <ul class="donut-legend">
+            @for (slice of donut(); track slice.status) {
+              <li>
+                <span class="row-tag" [style.background]="slice.color"></span>
+                <span class="legend-label">{{ slice.label }}</span>
+                <span class="legend-value">{{ slice.total }} · {{ slice.share }}%</span>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<mat-card class="statistics-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Détail par période</mat-card-title>
+    <mat-card-subtitle>Séries temporelles complètes</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    @if (series().length === 0) {
+      <p class="empty-state">Aucune donnée sur la période sélectionnée.</p>
+    } @else {
+      <table mat-table [dataSource]="series()" class="statistics-table">
+        <ng-container matColumnDef="period">
+          <th mat-header-cell *matHeaderCellDef>Période</th>
+          <td mat-cell *matCellDef="let row">{{ row.period }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalExams">
+          <th mat-header-cell *matHeaderCellDef>Examens</th>
+          <td mat-cell *matCellDef="let row">{{ row.totalExams }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalPatients">
+          <th mat-header-cell *matHeaderCellDef>Patients distincts</th>
+          <td mat-cell *matCellDef="let row">{{ row.totalPatients }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="periodColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: periodColumns"></tr>
+      </table>
+    }
+  </mat-card-content>
+</mat-card>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="periodColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: periodColumns"></tr>
+      </table>
+    }
+  </mat-card-content>
+</mat-card>
+        </ng-container>
+
+        <ng-container matColumnDef="totalPatients">
+          <th mat-header-cell *matHeaderCellDef>Patients distincts</th>
+          <td mat-cell *matCellDef="let row">{{ row.totalPatients }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="periodColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: periodColumns"></tr>
+      </table>
+    }
+  </mat-card-content>
+</mat-card>

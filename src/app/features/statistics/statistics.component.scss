@@ -1,0 +1,303 @@
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.page-header h1 {
+  margin: 0 0 0.25rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.page-header p {
+  margin: 0;
+  opacity: 0.7;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.filters mat-form-field {
+  width: 180px;
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  background: var(--mat-sys-error-container, #fde7e9);
+  color: var(--mat-sys-on-error-container, #410002);
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpi-card {
+  height: 100%;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--mat-sys-level2, 0 2px 6px rgba(0, 0, 0, 0.15));
+}
+
+.kpi-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}
+
+.kpi-icon--exams {
+  background: #e3f0ff;
+  color: #1565c0;
+}
+
+.kpi-icon--patients {
+  background: #e6f4ea;
+  color: #2e7d32;
+}
+
+.kpi-icon--periods {
+  background: #f3e8fd;
+  color: #6a1b9a;
+}
+
+.kpi-icon--done {
+  background: #fff4e5;
+  color: #ef6c00;
+}
+
+.kpi-value {
+  margin: 0;
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.kpi-label {
+  margin: 0.25rem 0 0;
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+.chart-card {
+  margin-bottom: 1.5rem;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot--exams {
+  background: #1565c0;
+}
+
+.dot--patients {
+  background: #2e7d32;
+}
+
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  height: 260px;
+  padding: 1rem 0.25rem 0;
+  overflow-x: auto;
+}
+
+.chart-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  min-width: 56px;
+  flex: 1 0 auto;
+  height: 100%;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+}
+
+.bar {
+  flex: 1;
+  min-height: 3px;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.35s ease;
+}
+
+.bar--exams {
+  background: linear-gradient(180deg, #1e88e5, #1565c0);
+}
+
+.bar--patients {
+  background: linear-gradient(180deg, #43a047, #2e7d32);
+}
+
+.chart-label {
+  font-size: 0.72rem;
+  white-space: nowrap;
+  opacity: 0.75;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.statistics-card {
+  margin-bottom: 1.5rem;
+}
+
+.statistics-table {
+  width: 100%;
+}
+
+.row-tag {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.share {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.donut-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.donut {
+  --donut-size: 180px;
+  width: var(--donut-size);
+  height: var(--donut-size);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+
+.donut-hole {
+  width: 62%;
+  height: 62%;
+  border-radius: 50%;
+  background: var(--mat-sys-surface);
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.donut-total {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.donut-total-label {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.donut-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.donut-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-label {
+  flex: 1;
+}
+
+.legend-value {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+}
+
+.empty-state {
+  margin: 1rem 0;
+  opacity: 0.7;
+}
+
+@media (max-width: 599px) {
+  .filters mat-form-field {
+    width: 100%;
+  }
+
+  .period-toggle {
+    width: 100%;
+  }
+
+  .chart {
+    height: 200px;
+  }
+}

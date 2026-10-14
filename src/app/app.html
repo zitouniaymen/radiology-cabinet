@@ -1,0 +1,20 @@
+<mat-toolbar color="primary" class="app-toolbar">
+  <a routerLink="/" class="brand">
+    <mat-icon aria-hidden="true">radiology</mat-icon>
+    <span class="brand-name">{{ title }}</span>
+  </a>
+  <span class="spacer"></span>
+  <nav class="app-nav" aria-label="Navigation principale">
+    <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
+    <a mat-button routerLink="/exams" routerLinkActive="active">Examens</a>
+    <a mat-button routerLink="/statistics" routerLinkActive="active">Statistiques</a>
+  </nav>
+</mat-toolbar>
+
+<main class="app-content">
+  <router-outlet />
+</main>
+
+<footer class="app-footer">
+  <p>Aucune donnée médicale n'est stockée : les patients sont identifiés par un code pseudonymisé.</p>
+</footer>

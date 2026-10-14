@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>{{ data.mode === 'create' ? 'Nouvel examen' : 'Modifier l\'examen' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-dialog-content class="dialog-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Code patient (pseudonymisé)</mat-label>
+      <input matInput formControlName="patientReference" placeholder="PAT-001" />
+      @if (form.controls.patientReference.hasError('pattern')) {
+        <mat-error>Utilisez uniquement des majuscules, chiffres et tirets.</mat-error>
+      }
+      @if (form.controls.patientReference.hasError('required')) {
+        <mat-error>Le code patient est obligatoire.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Modalité</mat-label>
+      <mat-select formControlName="modality">
+        @for (modality of modalities; track modality) {
+          <mat-option [value]="modality">{{ modality }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Région anatomique</mat-label>
+      <input matInput formControlName="bodyRegion" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Statut</mat-label>
+      <mat-select formControlName="status">
+        @for (status of statuses; track status) {
+          <mat-option [value]="status">{{ status }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Créneau</mat-label>
+      <input matInput type="datetime-local" formControlName="scheduledAt" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Durée (minutes)</mat-label>
+      <input matInput type="number" formControlName="durationMinutes" min="5" max="480" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Salle</mat-label>
+      <input matInput formControlName="room" />
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close>Annuler</button>
+    <button mat-flat-button color="primary" type="submit">Enregistrer</button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/exams/exam-list.component.scss"],
+  "sourcesContent": [".page-header {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 1rem;\n  align-items: center;\n  justify-content: space-between;\n  margin-bottom: 1rem;\n}\n\n.page-header h1 {\n  margin: 0;\n}\n\n.page-header p {\n  margin: 0.25rem 0 0;\n  opacity: 0.7;\n}\n\n.filters {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 1rem;\n}\n\n.table-wrapper {\n  overflow-x: auto;\n}\n\n.exam-table {\n  width: 100%;\n  min-width: 860px;\n}\n\n.actions-cell {\n  white-space: nowrap;\n}\n\n.empty-state {\n  padding: 1.5rem;\n  text-align: center;\n  opacity: 0.7;\n}\n"],
+  "mappings": ";AAAA,CAAA;AACE,WAAA;AACA,aAAA;AACA,OAAA;AACA,eAAA;AACA,mBAAA;AACA,iBAAA;;AAGF,CATA,YASA;AACE,UAAA;;AAGF,CAbA,YAaA;AACE,UAAA,QAAA,EAAA;AACA,WAAA;;AAGF,CAAA;AACE,WAAA;AACA,aAAA;AACA,OAAA;;AAGF,CAAA;AACE,cAAA;;AAGF,CAAA;AACE,SAAA;AACA,aAAA;;AAGF,CAAA;AACE,eAAA;;AAGF,CAAA;AACE,WAAA;AACA,cAAA;AACA,WAAA;;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/app.scss"],
+  "sourcesContent": [".app-toolbar {\n  position: sticky;\n  top: 0;\n  z-index: 10;\n  gap: 0.5rem;\n}\n\n.brand {\n  display: inline-flex;\n  align-items: center;\n  gap: 0.5rem;\n  color: inherit;\n  text-decoration: none;\n  font-weight: 600;\n}\n\n.spacer {\n  flex: 1 1 auto;\n}\n\n.app-content {\n  display: block;\n  min-height: calc(100vh - 128px);\n  padding: 1.5rem clamp(1rem, 4vw, 3rem);\n}\n\n.app-footer {\n  padding: 0.75rem clamp(1rem, 4vw, 3rem);\n  font-size: 0.8rem;\n  opacity: 0.75;\n}\n\n@media (max-width: 599px) {\n  .brand-name {\n    font-size: 1rem;\n  }\n\n  .app-nav {\n    display: flex;\n    gap: 0.25rem;\n  }\n}\n"],
+  "mappings": ";AAAA,CAAA;AACE,YAAA;AACA,OAAA;AACA,WAAA;AACA,OAAA;;AAGF,CAAA;AACE,WAAA;AACA,eAAA;AACA,OAAA;AACA,SAAA;AACA,mBAAA;AACA,eAAA;;AAGF,CAAA;AACE,QAAA,EAAA,EAAA;;AAGF,CAAA;AACE,WAAA;AACA,cAAA,KAAA,MAAA,EAAA;AACA,WAAA,OAAA,MAAA,IAAA,EAAA,GAAA,EAAA;;AAGF,CAAA;AACE,WAAA,QAAA,MAAA,IAAA,EAAA,GAAA,EAAA;AACA,aAAA;AACA,WAAA;;AAGF,QAAA,WAAA;AACE,GAAA;AACE,eAAA;;AAGF,GAAA;AACE,aAAA;AACA,SAAA;;;",
+  "names": []
+}

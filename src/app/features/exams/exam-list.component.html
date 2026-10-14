@@ -1,0 +1,107 @@
+<header class="page-header">
+  <div>
+    <h1>Examens</h1>
+    <p>Planification des examens d'imagerie du cabinet.</p>
+  </div>
+  <button mat-flat-button color="primary" type="button" (click)="openCreateDialog()">
+    <mat-icon>add</mat-icon>
+    Nouvel examen
+  </button>
+</header>
+
+<form class="filters" (ngSubmit)="onFilterChange()">
+  <mat-form-field appearance="outline">
+    <mat-label>Statut</mat-label>
+    <mat-select name="status" [(ngModel)]="statusFilter" (selectionChange)="onFilterChange()">
+      <mat-option value="">Tous</mat-option>
+      @for (status of statuses; track status) {
+        <mat-option [value]="status">{{ status }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Modalité</mat-label>
+    <mat-select name="modality" [(ngModel)]="modalityFilter" (selectionChange)="onFilterChange()">
+      <mat-option value="">Toutes</mat-option>
+      @for (modality of modalities; track modality) {
+        <mat-option [value]="modality">{{ modality }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</form>
+
+@if (loading()) {
+  <mat-progress-bar mode="indeterminate" aria-label="Chargement des examens" />
+}
+
+<div class="table-wrapper">
+  <table mat-table [dataSource]="exams()" class="exam-table">
+    <ng-container matColumnDef="reference">
+      <th mat-header-cell *matHeaderCellDef>Référence</th>
+      <td mat-cell *matCellDef="let exam">{{ exam.reference }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="patientReference">
+      <th mat-header-cell *matHeaderCellDef>Code patient</th>
+      <td mat-cell *matCellDef="let exam">{{ exam.patientReference }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="modality">
+      <th mat-header-cell *matHeaderCellDef>Modalité</th>
+      <td mat-cell *matCellDef="let exam">{{ exam.modality }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="bodyRegion">
+      <th mat-header-cell *matHeaderCellDef>Région</th>
+      <td mat-cell *matCellDef="let exam">{{ exam.bodyRegion }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="scheduledAt">
+      <th mat-header-cell *matHeaderCellDef>Créneau</th>
+      <td mat-cell *matCellDef="let exam">
+        {{ exam.scheduledAt | date: 'dd/MM/yyyy HH:mm' }} ({{ exam.durationMinutes }} min)
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="room">
+      <th mat-header-cell *matHeaderCellDef>Salle</th>
+      <td mat-cell *matCellDef="let exam">{{ exam.room }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Statut</th>
+      <td mat-cell *matCellDef="let exam">{{ exam.status }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef aria-label="Actions"></th>
+      <td mat-cell *matCellDef="let exam" class="actions-cell">
+        <button mat-icon-button type="button" aria-label="Modifier" (click)="openEditDialog(exam)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button type="button" aria-label="Annuler" (click)="cancelExam(exam)">
+          <mat-icon>event_busy</mat-icon>
+        </button>
+        <button mat-icon-button type="button" aria-label="Supprimer" (click)="deleteExam(exam)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  @if (!loading() && exams().length === 0) {
+    <p class="empty-state">Aucun examen ne correspond aux filtres sélectionnés.</p>
+  }
+</div>
+
+<mat-paginator
+  [length]="totalElements()"
+  [pageIndex]="pageIndex()"
+  [pageSize]="pageSize()"
+  [pageSizeOptions]="[5, 10, 25, 50]"
+  (page)="onPageChange($event)"
+/>
