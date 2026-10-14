@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: radiology-api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/radiology-api
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+radiology:
+  cors:
+    allowed-origins: ${RADIOLOGY_CORS_ALLOWED_ORIGINS:http://localhost:4200}
+
+logging:
+  level:
+    com.cabinet.radiology: INFO
