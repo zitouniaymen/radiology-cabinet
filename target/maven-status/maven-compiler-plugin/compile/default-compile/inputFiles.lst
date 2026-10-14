@@ -38,5 +38,16 @@ C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\c
 C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\patient\service\PatientStatisticsService.java
 C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\RadiologyApiApplication.java
 C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\statistics\api\StatisticsController.java
+C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\statistics\dto\ChronoStatisticsDto.java
 C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\statistics\dto\DashboardStatistics.java
+C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\statistics\dto\ModalityCount.java
+C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\statistics\dto\ModalityPeriodCount.java
+C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\statistics\dto\ModalityStatisticsDto.java
+C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\statistics\dto\PatientPeriodCount.java
+C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\statistics\dto\PeriodCount.java
+C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\statistics\dto\PeriodStatistics.java
+C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\statistics\dto\PeriodStatisticsDto.java
+C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\statistics\dto\StatisticsOverviewDto.java
+C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\statistics\dto\StatusCount.java
+C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\statistics\repository\StatisticsRepository.java
 C:\Users\AYMEN ZITOUNI\Downloads\radiology-cabinet\radiology-api\src\main\java\com\cabinet\radiology\statistics\services\StatisticsService.java
